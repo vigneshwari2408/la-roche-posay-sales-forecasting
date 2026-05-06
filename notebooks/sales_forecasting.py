@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore")
 # ─────────────────────────────────────────────
 # 1. LOAD REAL DATA FROM EXCEL
 # ─────────────────────────────────────────────
-df_raw = pd.read_excel("/content/[EN] - Creating value through data - Module #6 - least_squares_empty (2).xlsx")
+df_raw = pd.read_excel("../excel/La_Roche_Posay_Sales_Forecasting.xlsx")
 
 learn = df_raw.iloc[0:59].copy()
 learn = learn.rename(columns={
