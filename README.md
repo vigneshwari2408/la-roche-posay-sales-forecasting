@@ -37,63 +37,60 @@ End-to-end sales forecasting project for La Roche-Posay using 86 days of real da
 
 **Linear Regression coefficients (from LINEST / sklearn):**
 - Intercept approx 2,504 (baseline quiet weekday)
-- - Holiday approx -414 (fewer customers on holidays)
-  - - Weekend approx positive (higher weekend traffic)
-    - - Newsletter = strongest positive driver
-     
-      - **Key finding:** Newsletter campaigns were the single strongest lever for boosting daily sales — even more than weekends.
-     
-      - ---
+- Holiday approx -414 (fewer customers on holidays)
+- Weekend approx positive (higher weekend traffic)
+- Newsletter = strongest positive driver
 
-      ## Project Structure
+**Key finding:** Newsletter campaigns were the single strongest lever for boosting daily sales — even more than weekends.
 
-      ```
-      la-roche-posay-sales-forecasting/
-      notebooks/sales_forecasting.py   All 4 models: Global Avg, DoW, Linear Regression, LSTM
-      excel/La_Roche_Posay_Sales_Forecasting.xlsx   Full Excel workbook with LINEST models
-      data/schema.md   Star schema documentation
-      README.md
-      ```
+---
 
-      ---
+## Project Structure
+```
+la-roche-posay-sales-forecasting/
+├── notebooks/sales_forecasting.py                  # All 4 models: Global Avg, DoW, Linear Regression, LSTM
+├── excel/La_Roche_Posay_Sales_Forecasting.xlsx     # Full Excel workbook with LINEST models
+├── data/schema.md                                  # Star schema documentation
+└── README.md
+```
+---
 
-      ## Data Model
+## Data Model
 
-      Designed a star schema for BI reporting across e-commerce and retail channels:
+Designed a star schema for BI reporting across e-commerce and retail channels:
 
-      **Fact tables:** fact_sales, fact_orders, fact_inventory, fact_reviews, fact_campaign
-      **Dimension tables:** dim_customer, dim_product, dim_date, dim_channel, dim_location
+**Fact tables:** fact_sales, fact_orders, fact_inventory, fact_reviews, fact_campaign  
+**Dimension tables:** dim_customer, dim_product, dim_date, dim_channel, dim_location
 
-      The schema supports multi-market analysis (France, Germany, UK, Spain, Italy) across 5 sales channels (Website, Pharmacy, Mobile App, Amazon, Clinic). Full schema documentation: data/schema.md
+The schema supports multi-market analysis (France, Germany, UK, Spain, Italy) across 5 sales channels (Website, Pharmacy, Mobile App, Amazon, Clinic). Full schema documentation: data/schema.md
 
-      ---
+---
 
-      ## How to Run
+## How to Run
 
-      ```bash
-      git clone https://github.com/vigneshwari2408/la-roche-posay-sales-forecasting.git
-      cd la-roche-posay-sales-forecasting
-      pip install pandas numpy scikit-learn torch openpyxl
-      python notebooks/sales_forecasting.py
-      ```
+```bash
+git clone https://github.com/vigneshwari2408/la-roche-posay-sales-forecasting.git
+cd la-roche-posay-sales-forecasting
+pip install pandas numpy scikit-learn torch openpyxl
+python notebooks/sales_forecasting.py
+```
 
-      Note: the script expects the source Excel file at the path specified in the read_excel call. Update this to point to your local copy of the dataset.
+Note: the script expects the source Excel file at the path specified in the read_excel call. Update this to point to your local copy of the dataset.
 
-      ---
+---
 
-      ## Skills Demonstrated
+## Skills Demonstrated
 
-      - Forecasting model comparison (baseline to regression to deep learning)
-      - - Feature engineering with binary indicators
-        - - MAPE as evaluation metric for business forecasting
-          - - Excel financial modelling with LINEST
-            - - Relational data modelling (star schema, SQLite)
-              - - End-to-end project documentation
-               
-                - ---
+- Forecasting model comparison (baseline to regression to deep learning)
+- Feature engineering with binary indicators
+- MAPE as evaluation metric for business forecasting
+- Excel financial modelling with LINEST
+- Relational data modelling (star schema, SQLite)
+- End-to-end project documentation
 
-                ## About
+---
 
-                **Vigneshwari Nalla** — MSc Data Analytics for Business, KEDGE Business School
-                LinkedIn: https://linkedin.com/in/vigna24 Portfolio: https://vigneshwari2408.github.io/vigneshwari-portfolio/
-                
+## About
+
+**Vigneshwari Nalla** — MSc Data Analytics for Business, KEDGE Business School  
+[LinkedIn](https://linkedin.com/in/vigna24) · [Portfolio](https://vigneshwari2408.github.io/vigneshwari-portfolio/)
