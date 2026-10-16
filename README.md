@@ -90,7 +90,5 @@ Note: the script expects the source Excel file at the path specified in the read
 
 ---
 
-## About
-
-**Vigneshwari Nalla** — MSc Data Analytics for Business, KEDGE Business School  
-[LinkedIn](https://linkedin.com/in/vigna24) · [Portfolio](https://vigneshwari2408.github.io/vigneshwari-portfolio/)
+Made by **Vigneshwari Nalla (Vee)** · MSc Data Analytics for Business, KEDGE Business School
+[website](https://vigneshwari2408.github.io/vigneshwari-portfolio/) · [linkedin](https://www.linkedin.com/in/vigna24/) · [all projects](https://github.com/vigneshwari2408)
