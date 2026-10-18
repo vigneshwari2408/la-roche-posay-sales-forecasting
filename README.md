@@ -7,7 +7,7 @@
 
 ## Overview
 
-End-to-end sales forecasting project for La Roche-Posay using 86 days of real daily sales data (Oct 1 – Dec 25, 2021). Built and compared four forecasting models, then extended the project with a full relational data model and star schema for BI reporting.
+End-to-end sales forecasting project for La Roche-Posay using a daily sales workbook covering Oct 1 – Dec 25, 2021 (74 days with observed sales, plus 12 days to forecast). Built and compared three forecasting models in Excel and Python, plus a PyTorch LSTM script (not yet run; see Limitations), then extended the project with a full relational data model and star schema for BI reporting.
 
 **Business question:** Can we predict daily sales using calendar and marketing signals — day of week, holidays, and newsletter campaigns?
 
@@ -28,20 +28,22 @@ End-to-end sales forecasting project for La Roche-Posay using 86 days of real da
 
 ## Models & Results
 
-| Model | Method | Test MAPE |
-|---|---|---|
-| Model 1 — Global Average | Single mean of all training data | ~24% |
-| Model 2 — Day-of-Week Average | Separate mean per weekday | ~18% |
-| Model 3 — Linear Regression | Sales = intercept + Holiday + Weekend + Newsletter terms | ~13% |
-| Model 4 — PyTorch LSTM | Sequence model (window = 7 days) | competitive with LR |
+| Model | Method | Test MAPE (script) | Test MAPE (Excel sheets) |
+|---|---|---|---|
+| Model 1 — Global Average | Single mean of all training data | 17.2% | 17.9% |
+| Model 2 — Day-of-Week Average | Separate mean per weekday | 12.7% | 12.4% |
+| Model 3 — Linear Regression | Sales = intercept + Holiday + Weekend + Newsletter terms | 9.1% | 9.1% |
+| Model 4 — PyTorch LSTM | Sequence model (window = 7 days) | not run | not applicable |
+
+Test window: 15 days (Nov 29 – Dec 13, 2021). The small gap between the script and the Excel sheets for Models 1 and 2 is not yet explained.
 
 **Linear Regression coefficients (from LINEST / sklearn):**
 - Intercept approx 2,504 (baseline quiet weekday)
 - Holiday approx -414 (fewer customers on holidays)
-- Weekend approx positive (higher weekend traffic)
-- Newsletter = strongest positive driver
+- Weekend about +1,265 units
+- Newsletter about +3,133 units (largest of the three effects)
 
-**Key finding:** Newsletter campaigns were the single strongest lever for boosting daily sales — even more than weekends.
+**Key finding:** In this dataset, newsletter days had the largest estimated effect on daily sales, larger than weekends. Treat it as indicative: only 3 of the 59 learning days and 1 of the 15 test days had a newsletter, and the test window had no holidays.
 
 ---
 
@@ -62,7 +64,7 @@ Designed a star schema for BI reporting across e-commerce and retail channels:
 **Fact tables:** fact_sales, fact_orders, fact_inventory, fact_reviews, fact_campaign  
 **Dimension tables:** dim_customer, dim_product, dim_date, dim_channel, dim_location
 
-The schema supports multi-market analysis (France, Germany, UK, Spain, Italy) across 5 sales channels (Website, Pharmacy, Mobile App, Amazon, Clinic). Full schema documentation: data/schema.md
+The schema is designed for multi-market analysis (France, Germany, UK, Spain, Italy) across 5 sales channels (Website, Pharmacy, Mobile App, Amazon, Clinic). `data/larocheposay.db` contains the 10 tables with 5 sample rows each; no analysis has been run on them. Full schema documentation: data/schema.md
 
 ---
 
@@ -75,13 +77,24 @@ pip install pandas numpy scikit-learn torch openpyxl
 python notebooks/sales_forecasting.py
 ```
 
-Note: the script expects the source Excel file at the path specified in the read_excel call. Update this to point to your local copy of the dataset.
+The script reads the "Raw Data" sheet of `excel/La_Roche_Posay_Sales_Forecasting.xlsx` relative to its own location, so no path edit is needed.
+
+---
+
+## Limitations
+
+- **Small sample:** 59 learning days, 15 test days. MAPE on 15 days is volatile.
+- **Newsletter effect:** estimated from 3 newsletter days in the learning period.
+- **Holidays:** the test window contains none, so the holiday effect is not tested out of sample.
+- **Day names:** the workbook's "Day Name" column is one day later than the calendar dates (2021-10-01 was a Friday, labelled Saturday). The weekend flags match the real calendar; the day-of-week model groups by the day number, so its grouping is unaffected.
+- **Data origin:** the workbook's notes refer to a professor's module example. This README does not claim the data is company data.
+- **LSTM:** the script includes it, but its results have not been checked or reported here. Its test windows also use actual lagged sales, which the regression does not, so it would not be a like-for-like comparison.
 
 ---
 
 ## Skills Demonstrated
 
-- Forecasting model comparison (baseline to regression to deep learning)
+- Forecasting model comparison (baselines to regression)
 - Feature engineering with binary indicators
 - MAPE as evaluation metric for business forecasting
 - Excel financial modelling with LINEST
